@@ -14,6 +14,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var storyListView: ListView
     private val db = FirebaseFirestore.getInstance()
     private val stories = mutableListOf<String>()
+    private val storyDocIds = mutableListOf<String>()
     private lateinit var adapter: ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +24,7 @@ class HomeActivity : AppCompatActivity() {
         val welcomeText = findViewById<TextView>(R.id.welcomeText)
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         val writeStoryButton = findViewById<Button>(R.id.writeStoryButton)
+        val refreshButton = findViewById<Button>(R.id.refreshButton)
         storyListView = findViewById(R.id.storyListView)
 
         val email = FirebaseAuth.getInstance().currentUser?.email
@@ -37,13 +39,20 @@ class HomeActivity : AppCompatActivity() {
         writeStoryButton.setOnClickListener {
             startActivity(Intent(this, UploadStoryActivity::class.java))
         }
-        val refreshButton = findViewById<Button>(R.id.refreshButton)
 
         refreshButton.setOnClickListener {
             loadStories()
             Toast.makeText(this, "새로고침 완료", Toast.LENGTH_SHORT).show()
         }
 
+        storyListView.setOnItemClickListener { _, _, position, _ ->
+            if (position < storyDocIds.size) {
+                val docId = storyDocIds[position]
+                val intent = Intent(this, StoryDetailActivity::class.java)
+                intent.putExtra("storyId", docId)
+                startActivity(intent)
+            }
+        }
 
         adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, stories)
         storyListView.adapter = adapter
@@ -57,6 +66,8 @@ class HomeActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 stories.clear()
+                storyDocIds.clear()
+
                 for (doc in result) {
                     val title = doc.getString("title") ?: "(제목 없음)"
                     val authorId = doc.getString("authorId") ?: "(알 수 없음)"
@@ -65,12 +76,27 @@ class HomeActivity : AppCompatActivity() {
                         SimpleDateFormat("MM/dd HH:mm", Locale.getDefault()).format(it)
                     } ?: ""
 
-                    stories.add("$title\nby $authorId  ·  $timeStr")
+                    db.collection("users").document(authorId).get()
+                        .addOnSuccessListener { userDoc ->
+                            val nickname = userDoc.getString("nickname") ?: "(익명)"
+                            val storyText = "$title\nby $nickname · $timeStr"
+
+                            stories.add(storyText)
+                            storyDocIds.add(doc.id)
+
+                            adapter.notifyDataSetChanged()
+                        }
+                        .addOnFailureListener {
+                            val storyText = "$title\nby $authorId · $timeStr"
+                            stories.add(storyText)
+                            storyDocIds.add(doc.id)
+                            adapter.notifyDataSetChanged()
+                        }
                 }
-                adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "스토리 불러오기 실패", Toast.LENGTH_SHORT).show()
             }
     }
 }
+
