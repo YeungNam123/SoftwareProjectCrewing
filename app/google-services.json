@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "991234042353",
+    "project_id": "crewing-2b5ec",
+    "storage_bucket": "crewing-2b5ec.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991234042353:android:871183d836486fc2bcfc50",
+        "android_client_info": {
+          "package_name": "com.example.softwareproject_crewing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXeyJ9U1ZIc4AlgmZKW3qKWM73WuMUv-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
