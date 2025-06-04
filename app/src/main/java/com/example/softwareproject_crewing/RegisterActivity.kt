@@ -57,21 +57,26 @@ class RegisterActivity : AppCompatActivity() {
                         db.collection("users").document(uid)
                             .set(userData)
                             .addOnSuccessListener {
-                                Toast.makeText(this, "회원가입 성공!", Toast.LENGTH_SHORT).show()
-                                val intent = Intent(this, LoginActivity::class.java)
+                                Log.d("RegisterActivity", "✅ Firestore 저장 성공")
+                                Toast.makeText(this@RegisterActivity, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+
+
+                                val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 startActivity(intent)
+                                finish()
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Firestore 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Log.e("RegisterActivity", "❌ Firestore 저장 실패: ${e.message}")
+                                Toast.makeText(this@RegisterActivity, "Firestore 저장 실패: ${e.message}", Toast.LENGTH_SHORT).show()
                             }
 
                     } else {
                         val error = task.exception?.message ?: "알 수 없는 오류"
-                        Toast.makeText(this, "회원가입 실패: $error", Toast.LENGTH_LONG).show()
+                        Log.e("RegisterActivity", "❌ 회원가입 실패: $error")
+                        Toast.makeText(this@RegisterActivity, "회원가입 실패: $error", Toast.LENGTH_LONG).show()
                     }
                 }
-
         }
     }
 }
