@@ -1,4 +1,4 @@
-// build.gradle.kts (Module: app)
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")

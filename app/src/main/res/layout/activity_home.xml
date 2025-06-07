@@ -11,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
+        android:layout_marginTop="48dp"
         android:textSize="18sp" />
 
     <Button
@@ -49,5 +50,14 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"/>
+    <EditText
+        android:id="@+id/searchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="제목, 태그 또는 전공으로 검색"
+        android:padding="12dp"
+        android:inputType="text"
+        android:layout_marginBottom="8dp"/>
+
 
 </RelativeLayout>

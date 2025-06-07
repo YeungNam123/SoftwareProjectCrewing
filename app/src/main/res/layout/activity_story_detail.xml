@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp">
 
-    <!-- 글 제목 -->
+
     <TextView
         android:id="@+id/detailTitle"
         android:layout_width="match_parent"
@@ -14,30 +14,77 @@
         android:textStyle="bold"
         android:paddingBottom="8dp" />
 
-    <!-- 글 내용 -->
+
     <TextView
         android:id="@+id/detailContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp" />
 
-    <!-- 댓글 목록 -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/crewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="조원 수:"
+            android:textSize="16sp"
+            android:layout_marginEnd="8dp" />
+
+        <Button
+            android:id="@+id/decreaseCrewButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="−" />
+
+        <TextView
+            android:id="@+id/crewCountText"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/increaseCrewButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="＋" />
+    </LinearLayout>
+
+
     <ListView
         android:id="@+id/commentListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- 댓글 입력 -->
+
     <EditText
         android:id="@+id/commentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="댓글을 입력하세요" />
 
+
     <Button
         android:id="@+id/submitCommentButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="댓글 작성" />
+
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="글 삭제"
+        android:visibility="gone"
+        android:layout_marginTop="8dp" />
 </LinearLayout>

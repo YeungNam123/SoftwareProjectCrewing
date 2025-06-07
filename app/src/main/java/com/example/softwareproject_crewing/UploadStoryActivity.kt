@@ -6,8 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDateTime
-import java.time.ZoneId
 
 class UploadStoryActivity : AppCompatActivity() {
 
